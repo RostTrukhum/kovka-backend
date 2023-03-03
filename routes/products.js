@@ -27,7 +27,7 @@ router.get('/getProductSubtypes', async (req, res) => {
 
 router.get('/getProducts', async (req, res) => {
   try {
-    const products = await ProductModel.find({ ...req?.body?.filter })
+    const products = await ProductModel.find({ ...req?.query })
       .sort({ createdAt: -1 })
       .limit(req?.body?.limit)
       .skip(req?.body?.skip);
