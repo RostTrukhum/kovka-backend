@@ -5,7 +5,11 @@ const ProductSchema = new Schema({
   price: { type: Number, required: true },
   img: {
     type: String,
+    require: true,
   },
+  type: { type: String, require: true },
+  subtype: { type: String, required: true },
+  createdAt: { type: Date },
 });
 
 module.exports = model('Product', ProductSchema);

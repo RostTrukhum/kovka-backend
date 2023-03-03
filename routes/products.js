@@ -1,11 +1,36 @@
 const { Router } = require('express');
 const ProductModel = require('../models/product');
+const ProductTypeModel = require('../models/productType.js');
+const ProductSubtypeModel = require('../models/productSubtype.js');
 
 const router = Router();
 
+router.get('/getProductTypes', async (req, res) => {
+  try {
+    const productTypes = await ProductTypeModel.find();
+
+    res.status(200).send(productTypes);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+
+router.get('/getProductSubtypes', async (req, res) => {
+  try {
+    const productSubtypes = await ProductSubtypeModel.find();
+
+    res.status(200).send(productSubtypes);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+
 router.get('/getProducts', async (req, res) => {
   try {
-    const products = await ProductModel.find({ ...req?.body?.filter });
+    const products = await ProductModel.find({ ...req?.body?.filter })
+      .sort({ createdAt: -1 })
+      .limit(req?.body?.limit)
+      .skip(req?.body?.skip);
 
     res.status(200).send(products);
   } catch (e) {
@@ -27,7 +52,13 @@ router.post('/updateProduct', async (req, res) => {
   try {
     await ProductModel.findOneAndUpdate(
       { _id: req?.body?.id },
-      { title: req?.body?.title, price: req?.body?.price, img: req?.body?.img },
+      {
+        title: req?.body?.title,
+        price: req?.body?.price,
+        img: req?.body?.img,
+        type: req?.body?.type,
+        subtype: req?.body?.subtype,
+      },
     );
     res.status(200).send({ status: 'success' });
   } catch (e) {
@@ -41,6 +72,9 @@ router.post('/createProduct', async (req, res) => {
       title: req?.body?.title,
       price: req?.body?.price,
       img: req?.body?.img,
+      type: req?.body?.type,
+      subtype: req?.body?.subtype,
+      createdAt: new Date(),
     });
 
     await product.save();
