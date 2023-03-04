@@ -29,10 +29,16 @@ router.get('/getProducts', async (req, res) => {
   try {
     const products = await ProductModel.find({ ...req?.query })
       .sort({ createdAt: -1 })
-      .limit(req?.body?.limit)
-      .skip(req?.body?.skip);
+      .limit(req?.query?.limit)
+      .skip(req?.query?.skip);
 
-    res.status(200).send(products);
+    ProductModel.count(req?.query, function (err, count) {
+      if (err) {
+        res.status(400).send(err);
+      } else {
+        res.status(200).send({ products: products, totalCount: count });
+      }
+    });
   } catch (e) {
     res.status(400).send(e);
   }
