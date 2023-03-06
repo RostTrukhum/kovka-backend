@@ -1,8 +1,8 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const productsRoutes = require('./routes/products');
-const bodyParser = require('body-parser');
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import productsRoutes from './routes/products';
+import bodyParser from 'body-parser';
 
 const PORT = process.env.PORT ?? 3000;
 
@@ -22,7 +22,7 @@ const start = async () => {
     await mongoose.connect(
       'mongodb+srv://Rost:Rost_333@cluster0.dsc5o96.mongodb.net/?retryWrites=true&w=majority',
       {
-        useNewUrlParser: true,
+        // useNewUrlParser: true,
         // useFindAndModify: false
       },
     );

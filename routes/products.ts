@@ -1,7 +1,7 @@
-const { Router } = require('express');
-const ProductModel = require('../models/product');
-const ProductTypeModel = require('../models/productType.js');
-const ProductSubtypeModel = require('../models/productSubtype.js');
+import { Router } from 'express';
+import ProductModel from '../models/product';
+import ProductTypeModel from '../models/productType.js';
+import ProductSubtypeModel from '../models/productSubtype.js';
 
 const router = Router();
 
@@ -29,8 +29,8 @@ router.get('/getProducts', async (req, res) => {
   try {
     const products = await ProductModel.find({ ...req?.query })
       .sort({ createdAt: -1 })
-      .limit(req?.query?.limit)
-      .skip(req?.query?.skip);
+      .limit(req?.query?.limit as any)
+      .skip(req?.query?.skip as any);
 
     ProductModel.count(req?.query, function (err, count) {
       if (err) {
@@ -85,7 +85,7 @@ router.post('/createProduct', async (req, res) => {
 
     await product.save();
 
-    res.send(200, product);
+    res.status(200).send(product);
   } catch (e) {
     res.status(400).send(e);
   }
@@ -103,4 +103,4 @@ router.post('/deleteProduct', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
