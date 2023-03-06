@@ -4,7 +4,8 @@
   "description": "",
   "main": "dist",
   "scripts": {
-    "start": "tsc --project './tsconfig.json' --watch & NODE_ENV=development node dist",
+    "build": "yarn tsc --project './tsconfig.json' --watch & NODE_ENV=development",
+    "start": "node dist",
     "dev": "tsc --project './tsconfig.json' --watch & NODE_ENV=development nodemon dist"
   },
   "author": "",
