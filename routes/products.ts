@@ -2,6 +2,7 @@ import { Router } from 'express';
 import ProductModel from '../models/product';
 import ProductTypeModel from '../models/productType.js';
 import ProductSubtypeModel from '../models/productSubtype.js';
+import { IProductRequest } from './types';
 
 const router = Router();
 
@@ -15,22 +16,12 @@ router.get('/getProductTypes', async (req, res) => {
   }
 });
 
-router.get('/getProductSubtypes', async (req, res) => {
-  try {
-    const productSubtypes = await ProductSubtypeModel.find();
-
-    res.status(200).send(productSubtypes);
-  } catch (e) {
-    res.status(400).send(e);
-  }
-});
-
-router.get('/getProducts', async (req, res) => {
+router.get('/getProducts', async (req: IProductRequest, res) => {
   try {
     const products = await ProductModel.find({ ...req?.query })
       .sort({ createdAt: -1 })
-      .limit(req?.query?.limit as any)
-      .skip(req?.query?.skip as any);
+      .limit(req?.query?.limit)
+      .skip(req?.query?.skip);
 
     ProductModel.count(req?.query, function (err, count) {
       if (err) {

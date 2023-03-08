@@ -15,21 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const product_1 = __importDefault(require("../models/product"));
 const productType_js_1 = __importDefault(require("../models/productType.js"));
-const productSubtype_js_1 = __importDefault(require("../models/productSubtype.js"));
 const router = (0, express_1.Router)();
 router.get('/getProductTypes', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const productTypes = yield productType_js_1.default.find();
         res.status(200).send(productTypes);
-    }
-    catch (e) {
-        res.status(400).send(e);
-    }
-}));
-router.get('/getProductSubtypes', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const productSubtypes = yield productSubtype_js_1.default.find();
-        res.status(200).send(productSubtypes);
     }
     catch (e) {
         res.status(400).send(e);
