@@ -37,7 +37,7 @@ router.get('/getProducts', async (req: IProductRequest, res) => {
 
 router.get('/getProductById', async (req, res) => {
   try {
-    const product = await ProductModel.findOne({ _id: req?.body?.id });
+    const product = await ProductModel.findOne({ _id: req?.query?.id });
 
     res.status(200).send(product);
   } catch (e) {
