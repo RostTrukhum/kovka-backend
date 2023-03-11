@@ -48,7 +48,7 @@ router.get('/getProducts', (req, res) => __awaiter(void 0, void 0, void 0, funct
 router.get('/getProductById', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _c;
     try {
-        const product = yield product_1.default.findOne({ _id: (_c = req === null || req === void 0 ? void 0 : req.body) === null || _c === void 0 ? void 0 : _c.id });
+        const product = yield product_1.default.findOne({ _id: (_c = req === null || req === void 0 ? void 0 : req.query) === null || _c === void 0 ? void 0 : _c.id });
         res.status(200).send(product);
     }
     catch (e) {
