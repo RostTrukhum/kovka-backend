@@ -17,6 +17,7 @@ const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const cors_1 = __importDefault(require("cors"));
 const products_1 = __importDefault(require("./routes/products"));
+const call_back_1 = __importDefault(require("./routes/call-back"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const PORT = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3000;
 const app = (0, express_1.default)();
@@ -27,6 +28,7 @@ app.use(express_1.default.json());
 app.use(body_parser_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(products_1.default);
+app.use(call_back_1.default);
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield mongoose_1.default.connect('mongodb+srv://Rost:Rost_333@cluster0.dsc5o96.mongodb.net/?retryWrites=true&w=majority', {
