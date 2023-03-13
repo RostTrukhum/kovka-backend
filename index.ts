@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import productsRoutes from './routes/products';
 import callBackRoutes from './routes/call-back';
+import cartRoutes from './routes/cart';
 import bodyParser from 'body-parser';
 
 const PORT = process.env.PORT ?? 3000;
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(productsRoutes);
 app.use(callBackRoutes);
+app.use(cartRoutes);
 
 const start = async () => {
   try {

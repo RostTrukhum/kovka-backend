@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const ProductSchema = new Schema({
+export const productModel = {
   title: { type: String, required: true },
   price: { type: Number, required: true },
   img: {
@@ -10,6 +10,8 @@ const ProductSchema = new Schema({
   type: { type: String, require: true },
   subtype: { type: String, required: true },
   createdAt: { type: Date },
-});
+};
+
+const ProductSchema = new Schema(productModel);
 
 export default model('Product', ProductSchema);
