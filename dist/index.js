@@ -20,6 +20,7 @@ const products_1 = __importDefault(require("./routes/products"));
 const call_back_1 = __importDefault(require("./routes/call-back"));
 const cart_1 = __importDefault(require("./routes/cart"));
 const body_parser_1 = __importDefault(require("body-parser"));
+const axios_1 = __importDefault(require("axios"));
 const PORT = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3000;
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
@@ -39,6 +40,12 @@ const start = () => __awaiter(void 0, void 0, void 0, function* () {
         });
         app.listen(PORT, () => {
             console.log(`server has been started at ${PORT}`);
+            setInterval(() => {
+                axios_1.default
+                    .get('https://gospodar-kovka.onrender.com/getProducts?limit=1&skip=0')
+                    .then(() => console.log('server updated'))
+                    .catch(() => console.log('server not updated'));
+            }, 600000);
         });
     }
     catch (e) {

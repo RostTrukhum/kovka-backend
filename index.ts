@@ -5,6 +5,7 @@ import productsRoutes from './routes/products';
 import callBackRoutes from './routes/call-back';
 import cartRoutes from './routes/cart';
 import bodyParser from 'body-parser';
+import axios from 'axios';
 
 const PORT = process.env.PORT ?? 3000;
 
@@ -32,6 +33,12 @@ const start = async () => {
     );
     app.listen(PORT, () => {
       console.log(`server has been started at ${PORT}`);
+      setInterval(() => {
+        axios
+          .get('https://gospodar-kovka.onrender.com/getProducts?limit=1&skip=0')
+          .then(() => console.log('server updated'))
+          .catch(() => console.log('server not updated'));
+      }, 600000);
     });
   } catch (e) {
     console.log(e);
