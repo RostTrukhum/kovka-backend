@@ -1,11 +1,15 @@
 import { Schema, model } from 'mongoose';
-import { productModel } from './product';
 
 const CartSchema = new Schema({
   products: [
-    { ...productModel, productId: { type: String }, count: { type: Number } },
+    {
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+      },
+      count: { type: Number },
+    },
   ],
-  amount: { type: Number },
 });
 
 export default model('Cart', CartSchema);
