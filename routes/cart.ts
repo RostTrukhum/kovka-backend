@@ -42,6 +42,16 @@ router.post('/createCart', async (req, res) => {
   }
 });
 
+router.post('/deleteCart', async (req, res) => {
+  try {
+    await CartModal.findOneAndDelete({ _id: req?.body?.cartId });
+
+    res.status(200).send('Cart has deleted');
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
 router.post('/addToCart', async (req, res) => {
   try {
     const cart = await CartModal.findOne({ _id: req?.body?.cartId }).populate([

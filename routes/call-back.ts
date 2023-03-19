@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import nodemailer from 'nodemailer';
+import { IProduct } from './types';
 
 const router = Router();
 
@@ -18,6 +19,35 @@ router.post('/sendCallBack', async (req, res) => {
       to: 'rostislavtruhim012@gmail.com',
       subject: `Новий заказ від ${req?.body?.phoneNumber}`,
       html: `<p>Новий заказ від ${req?.body?.phoneNumber}</p>`,
+    });
+
+    res.status(200).send('Success has send call back');
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+
+router.post('/sendCartCallBack', async (req, res) => {
+  const products = req?.body?.products
+    .map((product: IProduct) => {
+      return `
+    <img src="${product?.product?.img}" />
+    <p>Назва продукту: ${product?.product?.title}</p>
+    <p>Ціна: ${product?.product?.price} грн</p>
+    <p>Кількість: ${product?.count}</p>
+    `;
+    })
+    .join('');
+
+  try {
+    transporter.sendMail({
+      from: `This message from ${req?.body?.phoneNumber}`,
+      to: 'rostislavtruhim012@gmail.com',
+      subject: `Новий заказ від ${req?.body?.phoneNumber}`,
+      html: `
+        <h2>Новий заказ від ${req?.body?.phoneNumber} на суму ${req?.body?.totalPrice} грн</h2>
+        ${products}
+      `,
     });
 
     res.status(200).send('Success has send call back');
