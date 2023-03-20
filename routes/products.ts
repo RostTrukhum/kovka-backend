@@ -55,6 +55,7 @@ router.post('/updateProduct', async (req, res) => {
         img: req?.body?.img,
         type: req?.body?.type,
         subtype: req?.body?.subtype,
+        description: req?.body?.description,
       },
     );
     res.status(200).send({ status: 'success' });
@@ -71,6 +72,7 @@ router.post('/createProduct', async (req, res) => {
       img: req?.body?.img,
       type: req?.body?.type,
       subtype: req?.body?.subtype,
+      description: req?.body?.description,
       createdAt: new Date(),
     });
 

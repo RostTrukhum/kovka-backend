@@ -9,6 +9,7 @@ export const productModel = {
   },
   type: { type: String, require: true },
   subtype: { type: String, required: true },
+  description: { type: String, required: true },
   createdAt: { type: Date },
 };
 

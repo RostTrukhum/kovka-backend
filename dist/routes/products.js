@@ -56,7 +56,7 @@ router.get('/getProductById', (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
 }));
 router.post('/updateProduct', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _d, _e, _f, _g, _h, _j;
+    var _d, _e, _f, _g, _h, _j, _k;
     try {
         yield product_1.default.findOneAndUpdate({ _id: (_d = req === null || req === void 0 ? void 0 : req.body) === null || _d === void 0 ? void 0 : _d.id }, {
             title: (_e = req === null || req === void 0 ? void 0 : req.body) === null || _e === void 0 ? void 0 : _e.title,
@@ -64,6 +64,7 @@ router.post('/updateProduct', (req, res) => __awaiter(void 0, void 0, void 0, fu
             img: (_g = req === null || req === void 0 ? void 0 : req.body) === null || _g === void 0 ? void 0 : _g.img,
             type: (_h = req === null || req === void 0 ? void 0 : req.body) === null || _h === void 0 ? void 0 : _h.type,
             subtype: (_j = req === null || req === void 0 ? void 0 : req.body) === null || _j === void 0 ? void 0 : _j.subtype,
+            description: (_k = req === null || req === void 0 ? void 0 : req.body) === null || _k === void 0 ? void 0 : _k.description,
         });
         res.status(200).send({ status: 'success' });
     }
@@ -72,14 +73,15 @@ router.post('/updateProduct', (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
 }));
 router.post('/createProduct', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _k, _l, _m, _o, _p;
+    var _l, _m, _o, _p, _q, _r;
     try {
         const product = new product_1.default({
-            title: (_k = req === null || req === void 0 ? void 0 : req.body) === null || _k === void 0 ? void 0 : _k.title,
-            price: (_l = req === null || req === void 0 ? void 0 : req.body) === null || _l === void 0 ? void 0 : _l.price,
-            img: (_m = req === null || req === void 0 ? void 0 : req.body) === null || _m === void 0 ? void 0 : _m.img,
-            type: (_o = req === null || req === void 0 ? void 0 : req.body) === null || _o === void 0 ? void 0 : _o.type,
-            subtype: (_p = req === null || req === void 0 ? void 0 : req.body) === null || _p === void 0 ? void 0 : _p.subtype,
+            title: (_l = req === null || req === void 0 ? void 0 : req.body) === null || _l === void 0 ? void 0 : _l.title,
+            price: (_m = req === null || req === void 0 ? void 0 : req.body) === null || _m === void 0 ? void 0 : _m.price,
+            img: (_o = req === null || req === void 0 ? void 0 : req.body) === null || _o === void 0 ? void 0 : _o.img,
+            type: (_p = req === null || req === void 0 ? void 0 : req.body) === null || _p === void 0 ? void 0 : _p.type,
+            subtype: (_q = req === null || req === void 0 ? void 0 : req.body) === null || _q === void 0 ? void 0 : _q.subtype,
+            description: (_r = req === null || req === void 0 ? void 0 : req.body) === null || _r === void 0 ? void 0 : _r.description,
             createdAt: new Date(),
         });
         yield product.save();
@@ -90,15 +92,15 @@ router.post('/createProduct', (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
 }));
 router.post('/deleteProduct', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _q, _r;
+    var _s, _t;
     try {
         yield product_1.default.findOneAndDelete({
-            _id: (_q = req === null || req === void 0 ? void 0 : req.body) === null || _q === void 0 ? void 0 : _q.id,
+            _id: (_s = req === null || req === void 0 ? void 0 : req.body) === null || _s === void 0 ? void 0 : _s.id,
         });
         res === null || res === void 0 ? void 0 : res.status(200).send('Product deleted');
     }
     catch (e) {
-        (_r = res === null || res === void 0 ? void 0 : res.status(400)) === null || _r === void 0 ? void 0 : _r.send(e);
+        (_t = res === null || res === void 0 ? void 0 : res.status(400)) === null || _t === void 0 ? void 0 : _t.send(e);
     }
 }));
 exports.default = router;
