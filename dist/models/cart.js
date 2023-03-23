@@ -9,6 +9,8 @@ const CartSchema = new mongoose_1.Schema({
                 ref: 'Product',
             },
             count: { type: Number },
+            width: { type: Number },
+            height: { type: Number },
         },
     ],
 });

@@ -32,7 +32,12 @@ router.post('/createCart', async (req, res) => {
       throw new Error('Product does not exist');
     }
 
-    cart.products.push({ product, count: req?.body?.productCount || 1 });
+    cart.products.push({
+      product,
+      count: req?.body?.productCount || 1,
+      width: req?.body?.productWidth,
+      height: req?.body?.productHeight,
+    });
 
     await cart.save();
 
@@ -64,6 +69,8 @@ router.post('/addToCart', async (req, res) => {
     const findExactProductCart = await CartModal.findOne({
       _id: req?.body?.cartId,
       'products.product': req?.body?.productId,
+      'products.width': req?.body?.productWidth,
+      'products.height': req?.body?.productHeight,
     });
 
     const updateProductCount = async () => {
@@ -109,6 +116,8 @@ router.post('/addToCart', async (req, res) => {
             {
               product: req?.body?.productId,
               count: req?.body?.productCount || 1,
+              width: req?.body?.productWidth,
+              height: req?.body?.productHeight,
             },
           ],
         },
@@ -148,7 +157,12 @@ router.post('/deleteProductCart', async (req, res) => {
 router.post('/updateCartProductCount', async (req, res) => {
   try {
     const updatedProduct = await CartModal.findOneAndUpdate(
-      { _id: req?.body?.cartId, 'products._id': req?.body?.cartProductId },
+      {
+        _id: req?.body?.cartId,
+        'products._id': req?.body?.cartProductId,
+        'products.width': req?.body?.productWidth,
+        'products.height': req?.body?.productHeight,
+      },
       {
         $set: {
           'products.$.count': req?.body?.productCount,

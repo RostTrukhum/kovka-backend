@@ -32,7 +32,7 @@ router.get('/getCart', (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 }));
 router.post('/createCart', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b, _c;
+    var _b, _c, _d, _e;
     try {
         const cart = new cart_1.default();
         const product = yield product_1.default.findOne({
@@ -41,7 +41,12 @@ router.post('/createCart', (req, res) => __awaiter(void 0, void 0, void 0, funct
         if (!product) {
             throw new Error('Product does not exist');
         }
-        cart.products.push({ product, count: ((_c = req === null || req === void 0 ? void 0 : req.body) === null || _c === void 0 ? void 0 : _c.productCount) || 1 });
+        cart.products.push({
+            product,
+            count: ((_c = req === null || req === void 0 ? void 0 : req.body) === null || _c === void 0 ? void 0 : _c.productCount) || 1,
+            width: (_d = req === null || req === void 0 ? void 0 : req.body) === null || _d === void 0 ? void 0 : _d.productWidth,
+            height: (_e = req === null || req === void 0 ? void 0 : req.body) === null || _e === void 0 ? void 0 : _e.productHeight,
+        });
         yield cart.save();
         res.status(200).send(cart);
     }
@@ -50,9 +55,9 @@ router.post('/createCart', (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 }));
 router.post('/deleteCart', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _d;
+    var _f;
     try {
-        yield cart_1.default.findOneAndDelete({ _id: (_d = req === null || req === void 0 ? void 0 : req.body) === null || _d === void 0 ? void 0 : _d.cartId });
+        yield cart_1.default.findOneAndDelete({ _id: (_f = req === null || req === void 0 ? void 0 : req.body) === null || _f === void 0 ? void 0 : _f.cartId });
         res.status(200).send('Cart has deleted');
     }
     catch (err) {
@@ -60,27 +65,29 @@ router.post('/deleteCart', (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 }));
 router.post('/addToCart', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _e, _f, _g, _h, _j, _k;
+    var _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
     try {
-        const cart = yield cart_1.default.findOne({ _id: (_e = req === null || req === void 0 ? void 0 : req.body) === null || _e === void 0 ? void 0 : _e.cartId }).populate([
+        const cart = yield cart_1.default.findOne({ _id: (_g = req === null || req === void 0 ? void 0 : req.body) === null || _g === void 0 ? void 0 : _g.cartId }).populate([
             {
                 path: 'products',
                 populate: [{ path: 'product' }],
             },
         ]);
         const findExactProductCart = yield cart_1.default.findOne({
-            _id: (_f = req === null || req === void 0 ? void 0 : req.body) === null || _f === void 0 ? void 0 : _f.cartId,
-            'products.product': (_g = req === null || req === void 0 ? void 0 : req.body) === null || _g === void 0 ? void 0 : _g.productId,
+            _id: (_h = req === null || req === void 0 ? void 0 : req.body) === null || _h === void 0 ? void 0 : _h.cartId,
+            'products.product': (_j = req === null || req === void 0 ? void 0 : req.body) === null || _j === void 0 ? void 0 : _j.productId,
+            'products.width': (_k = req === null || req === void 0 ? void 0 : req.body) === null || _k === void 0 ? void 0 : _k.productWidth,
+            'products.height': (_l = req === null || req === void 0 ? void 0 : req.body) === null || _l === void 0 ? void 0 : _l.productHeight,
         });
         const updateProductCount = () => __awaiter(void 0, void 0, void 0, function* () {
-            var _l, _m, _o;
+            var _s, _t, _u;
             const productToUpdate = findExactProductCart === null || findExactProductCart === void 0 ? void 0 : findExactProductCart.products.find(product => { var _a, _b; return ((_a = product === null || product === void 0 ? void 0 : product.product) === null || _a === void 0 ? void 0 : _a._id.toString()) === ((_b = req === null || req === void 0 ? void 0 : req.body) === null || _b === void 0 ? void 0 : _b.productId); });
             const updatedCart = yield cart_1.default.findOneAndUpdate({
-                _id: (_l = req === null || req === void 0 ? void 0 : req.body) === null || _l === void 0 ? void 0 : _l.cartId,
-                'products.product': (_m = req === null || req === void 0 ? void 0 : req.body) === null || _m === void 0 ? void 0 : _m.productId,
+                _id: (_s = req === null || req === void 0 ? void 0 : req.body) === null || _s === void 0 ? void 0 : _s.cartId,
+                'products.product': (_t = req === null || req === void 0 ? void 0 : req.body) === null || _t === void 0 ? void 0 : _t.productId,
             }, {
                 $set: {
-                    'products.$.count': (productToUpdate === null || productToUpdate === void 0 ? void 0 : productToUpdate.count) + (((_o = req === null || req === void 0 ? void 0 : req.body) === null || _o === void 0 ? void 0 : _o.productCount) || 1),
+                    'products.$.count': (productToUpdate === null || productToUpdate === void 0 ? void 0 : productToUpdate.count) + (((_u = req === null || req === void 0 ? void 0 : req.body) === null || _u === void 0 ? void 0 : _u.productCount) || 1),
                 },
             }, { new: true }).populate([
                 {
@@ -95,12 +102,14 @@ router.post('/addToCart', (req, res) => __awaiter(void 0, void 0, void 0, functi
             return;
         }
         const updatedCart = cart &&
-            (yield cart_1.default.findOneAndUpdate({ _id: (_h = req === null || req === void 0 ? void 0 : req.body) === null || _h === void 0 ? void 0 : _h.cartId }, {
+            (yield cart_1.default.findOneAndUpdate({ _id: (_m = req === null || req === void 0 ? void 0 : req.body) === null || _m === void 0 ? void 0 : _m.cartId }, {
                 products: [
                     ...cart === null || cart === void 0 ? void 0 : cart.products,
                     {
-                        product: (_j = req === null || req === void 0 ? void 0 : req.body) === null || _j === void 0 ? void 0 : _j.productId,
-                        count: ((_k = req === null || req === void 0 ? void 0 : req.body) === null || _k === void 0 ? void 0 : _k.productCount) || 1,
+                        product: (_o = req === null || req === void 0 ? void 0 : req.body) === null || _o === void 0 ? void 0 : _o.productId,
+                        count: ((_p = req === null || req === void 0 ? void 0 : req.body) === null || _p === void 0 ? void 0 : _p.productCount) || 1,
+                        width: (_q = req === null || req === void 0 ? void 0 : req.body) === null || _q === void 0 ? void 0 : _q.productWidth,
+                        height: (_r = req === null || req === void 0 ? void 0 : req.body) === null || _r === void 0 ? void 0 : _r.productHeight,
                     },
                 ],
             }, { new: true }).populate([
@@ -116,9 +125,9 @@ router.post('/addToCart', (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 }));
 router.post('/deleteProductCart', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _p, _q;
+    var _v, _w;
     try {
-        const updatedCart = yield cart_1.default.findOneAndUpdate({ _id: (_p = req === null || req === void 0 ? void 0 : req.body) === null || _p === void 0 ? void 0 : _p.cartId }, { $pull: { products: { _id: (_q = req === null || req === void 0 ? void 0 : req.body) === null || _q === void 0 ? void 0 : _q.cartProductId } } }, { new: true }).populate([
+        const updatedCart = yield cart_1.default.findOneAndUpdate({ _id: (_v = req === null || req === void 0 ? void 0 : req.body) === null || _v === void 0 ? void 0 : _v.cartId }, { $pull: { products: { _id: (_w = req === null || req === void 0 ? void 0 : req.body) === null || _w === void 0 ? void 0 : _w.cartProductId } } }, { new: true }).populate([
             {
                 path: 'products',
                 populate: [{ path: 'product' }],
@@ -131,11 +140,16 @@ router.post('/deleteProductCart', (req, res) => __awaiter(void 0, void 0, void 0
     }
 }));
 router.post('/updateCartProductCount', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _r, _s, _t;
+    var _x, _y, _z, _0, _1;
     try {
-        const updatedProduct = yield cart_1.default.findOneAndUpdate({ _id: (_r = req === null || req === void 0 ? void 0 : req.body) === null || _r === void 0 ? void 0 : _r.cartId, 'products._id': (_s = req === null || req === void 0 ? void 0 : req.body) === null || _s === void 0 ? void 0 : _s.cartProductId }, {
+        const updatedProduct = yield cart_1.default.findOneAndUpdate({
+            _id: (_x = req === null || req === void 0 ? void 0 : req.body) === null || _x === void 0 ? void 0 : _x.cartId,
+            'products._id': (_y = req === null || req === void 0 ? void 0 : req.body) === null || _y === void 0 ? void 0 : _y.cartProductId,
+            'products.width': (_z = req === null || req === void 0 ? void 0 : req.body) === null || _z === void 0 ? void 0 : _z.productWidth,
+            'products.height': (_0 = req === null || req === void 0 ? void 0 : req.body) === null || _0 === void 0 ? void 0 : _0.productHeight,
+        }, {
             $set: {
-                'products.$.count': (_t = req === null || req === void 0 ? void 0 : req.body) === null || _t === void 0 ? void 0 : _t.productCount,
+                'products.$.count': (_1 = req === null || req === void 0 ? void 0 : req.body) === null || _1 === void 0 ? void 0 : _1.productCount,
             },
         }, { new: true }).populate([
             {

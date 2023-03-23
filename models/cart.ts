@@ -8,6 +8,8 @@ const CartSchema = new Schema({
         ref: 'Product',
       },
       count: { type: Number },
+      width: { type: Number },
+      height: { type: Number },
     },
   ],
 });

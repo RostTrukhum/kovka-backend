@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import ProductModel from '../models/product';
 import ProductTypeModel from '../models/productType.js';
-import ProductSubtypeModel from '../models/productSubtype.js';
 import { IProductRequest } from './types';
 
 const router = Router();
