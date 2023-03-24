@@ -68,20 +68,33 @@ router.post('/addToCart', async (req, res) => {
 
     const findExactProductCart = await CartModal.findOne({
       _id: req?.body?.cartId,
-      'products.product': req?.body?.productId,
-      'products.width': req?.body?.productWidth,
-      'products.height': req?.body?.productHeight,
+      products: {
+        $elemMatch: {
+          product: req?.body?.productId,
+          width: req?.body?.productWidth,
+          height: req?.body?.productHeight,
+        },
+      },
     });
 
     const updateProductCount = async () => {
       const productToUpdate = findExactProductCart?.products.find(
-        product => product?.product?._id.toString() === req?.body?.productId,
+        product =>
+          product?.product?._id.toString() === req?.body?.productId &&
+          product?.height === req?.body?.productHeight &&
+          product.width === req?.body?.productWidth,
       );
 
       const updatedCart = await CartModal.findOneAndUpdate(
         {
           _id: req?.body?.cartId,
-          'products.product': req?.body?.productId,
+          products: {
+            $elemMatch: {
+              product: req?.body?.productId,
+              width: req?.body?.productWidth,
+              height: req?.body?.productHeight,
+            },
+          },
         },
         {
           $set: {
@@ -159,9 +172,11 @@ router.post('/updateCartProductCount', async (req, res) => {
     const updatedProduct = await CartModal.findOneAndUpdate(
       {
         _id: req?.body?.cartId,
-        'products._id': req?.body?.cartProductId,
-        'products.width': req?.body?.productWidth,
-        'products.height': req?.body?.productHeight,
+        products: {
+          $elemMatch: {
+            _id: req?.body?.cartProductId,
+          },
+        },
       },
       {
         $set: {

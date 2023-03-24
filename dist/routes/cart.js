@@ -75,19 +75,34 @@ router.post('/addToCart', (req, res) => __awaiter(void 0, void 0, void 0, functi
         ]);
         const findExactProductCart = yield cart_1.default.findOne({
             _id: (_h = req === null || req === void 0 ? void 0 : req.body) === null || _h === void 0 ? void 0 : _h.cartId,
-            'products.product': (_j = req === null || req === void 0 ? void 0 : req.body) === null || _j === void 0 ? void 0 : _j.productId,
-            'products.width': (_k = req === null || req === void 0 ? void 0 : req.body) === null || _k === void 0 ? void 0 : _k.productWidth,
-            'products.height': (_l = req === null || req === void 0 ? void 0 : req.body) === null || _l === void 0 ? void 0 : _l.productHeight,
+            products: {
+                $elemMatch: {
+                    product: (_j = req === null || req === void 0 ? void 0 : req.body) === null || _j === void 0 ? void 0 : _j.productId,
+                    width: (_k = req === null || req === void 0 ? void 0 : req.body) === null || _k === void 0 ? void 0 : _k.productWidth,
+                    height: (_l = req === null || req === void 0 ? void 0 : req.body) === null || _l === void 0 ? void 0 : _l.productHeight,
+                },
+            },
         });
         const updateProductCount = () => __awaiter(void 0, void 0, void 0, function* () {
-            var _s, _t, _u;
-            const productToUpdate = findExactProductCart === null || findExactProductCart === void 0 ? void 0 : findExactProductCart.products.find(product => { var _a, _b; return ((_a = product === null || product === void 0 ? void 0 : product.product) === null || _a === void 0 ? void 0 : _a._id.toString()) === ((_b = req === null || req === void 0 ? void 0 : req.body) === null || _b === void 0 ? void 0 : _b.productId); });
+            var _s, _t, _u, _v, _w;
+            const productToUpdate = findExactProductCart === null || findExactProductCart === void 0 ? void 0 : findExactProductCart.products.find(product => {
+                var _a, _b, _c, _d;
+                return ((_a = product === null || product === void 0 ? void 0 : product.product) === null || _a === void 0 ? void 0 : _a._id.toString()) === ((_b = req === null || req === void 0 ? void 0 : req.body) === null || _b === void 0 ? void 0 : _b.productId) &&
+                    (product === null || product === void 0 ? void 0 : product.height) === ((_c = req === null || req === void 0 ? void 0 : req.body) === null || _c === void 0 ? void 0 : _c.productHeight) &&
+                    product.width === ((_d = req === null || req === void 0 ? void 0 : req.body) === null || _d === void 0 ? void 0 : _d.productWidth);
+            });
             const updatedCart = yield cart_1.default.findOneAndUpdate({
                 _id: (_s = req === null || req === void 0 ? void 0 : req.body) === null || _s === void 0 ? void 0 : _s.cartId,
-                'products.product': (_t = req === null || req === void 0 ? void 0 : req.body) === null || _t === void 0 ? void 0 : _t.productId,
+                products: {
+                    $elemMatch: {
+                        product: (_t = req === null || req === void 0 ? void 0 : req.body) === null || _t === void 0 ? void 0 : _t.productId,
+                        width: (_u = req === null || req === void 0 ? void 0 : req.body) === null || _u === void 0 ? void 0 : _u.productWidth,
+                        height: (_v = req === null || req === void 0 ? void 0 : req.body) === null || _v === void 0 ? void 0 : _v.productHeight,
+                    },
+                },
             }, {
                 $set: {
-                    'products.$.count': (productToUpdate === null || productToUpdate === void 0 ? void 0 : productToUpdate.count) + (((_u = req === null || req === void 0 ? void 0 : req.body) === null || _u === void 0 ? void 0 : _u.productCount) || 1),
+                    'products.$.count': (productToUpdate === null || productToUpdate === void 0 ? void 0 : productToUpdate.count) + (((_w = req === null || req === void 0 ? void 0 : req.body) === null || _w === void 0 ? void 0 : _w.productCount) || 1),
                 },
             }, { new: true }).populate([
                 {
@@ -125,9 +140,9 @@ router.post('/addToCart', (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 }));
 router.post('/deleteProductCart', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _v, _w;
+    var _x, _y;
     try {
-        const updatedCart = yield cart_1.default.findOneAndUpdate({ _id: (_v = req === null || req === void 0 ? void 0 : req.body) === null || _v === void 0 ? void 0 : _v.cartId }, { $pull: { products: { _id: (_w = req === null || req === void 0 ? void 0 : req.body) === null || _w === void 0 ? void 0 : _w.cartProductId } } }, { new: true }).populate([
+        const updatedCart = yield cart_1.default.findOneAndUpdate({ _id: (_x = req === null || req === void 0 ? void 0 : req.body) === null || _x === void 0 ? void 0 : _x.cartId }, { $pull: { products: { _id: (_y = req === null || req === void 0 ? void 0 : req.body) === null || _y === void 0 ? void 0 : _y.cartProductId } } }, { new: true }).populate([
             {
                 path: 'products',
                 populate: [{ path: 'product' }],
@@ -140,13 +155,15 @@ router.post('/deleteProductCart', (req, res) => __awaiter(void 0, void 0, void 0
     }
 }));
 router.post('/updateCartProductCount', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _x, _y, _z, _0, _1;
+    var _z, _0, _1;
     try {
         const updatedProduct = yield cart_1.default.findOneAndUpdate({
-            _id: (_x = req === null || req === void 0 ? void 0 : req.body) === null || _x === void 0 ? void 0 : _x.cartId,
-            'products._id': (_y = req === null || req === void 0 ? void 0 : req.body) === null || _y === void 0 ? void 0 : _y.cartProductId,
-            'products.width': (_z = req === null || req === void 0 ? void 0 : req.body) === null || _z === void 0 ? void 0 : _z.productWidth,
-            'products.height': (_0 = req === null || req === void 0 ? void 0 : req.body) === null || _0 === void 0 ? void 0 : _0.productHeight,
+            _id: (_z = req === null || req === void 0 ? void 0 : req.body) === null || _z === void 0 ? void 0 : _z.cartId,
+            products: {
+                $elemMatch: {
+                    _id: (_0 = req === null || req === void 0 ? void 0 : req.body) === null || _0 === void 0 ? void 0 : _0.cartProductId,
+                },
+            },
         }, {
             $set: {
                 'products.$.count': (_1 = req === null || req === void 0 ? void 0 : req.body) === null || _1 === void 0 ? void 0 : _1.productCount,
