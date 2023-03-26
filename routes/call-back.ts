@@ -35,6 +35,8 @@ router.post('/sendCartCallBack', async (req, res) => {
     <p>Назва продукту: ${product?.product?.title}</p>
     <p>Ціна: ${product?.product?.price} грн</p>
     <p>Кількість: ${product?.count}</p>
+    <p>Ширина: ${product?.width}</p>
+    <p>Висота: ${product?.height}</p>
     `;
     })
     .join('');

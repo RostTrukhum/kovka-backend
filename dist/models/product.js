@@ -12,6 +12,8 @@ exports.productModel = {
     type: { type: String, require: true },
     subtype: { type: String, required: true },
     description: { type: String, required: true },
+    width: { type: Number },
+    height: { type: Number },
     createdAt: { type: Date },
 };
 const ProductSchema = new mongoose_1.Schema(exports.productModel);

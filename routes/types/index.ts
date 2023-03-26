@@ -16,5 +16,7 @@ export interface IProduct {
     createdAt: Date;
   };
   count: number;
+  width: number;
+  height: number;
   _id: string;
 }

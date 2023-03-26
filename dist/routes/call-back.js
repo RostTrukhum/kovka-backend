@@ -46,6 +46,8 @@ router.post('/sendCartCallBack', (req, res) => __awaiter(void 0, void 0, void 0,
     <p>Назва продукту: ${(_b = product === null || product === void 0 ? void 0 : product.product) === null || _b === void 0 ? void 0 : _b.title}</p>
     <p>Ціна: ${(_c = product === null || product === void 0 ? void 0 : product.product) === null || _c === void 0 ? void 0 : _c.price} грн</p>
     <p>Кількість: ${product === null || product === void 0 ? void 0 : product.count}</p>
+    <p>Ширина: ${product === null || product === void 0 ? void 0 : product.width}</p>
+    <p>Висота: ${product === null || product === void 0 ? void 0 : product.height}</p>
     `;
     }).join('');
     try {
