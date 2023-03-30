@@ -23,13 +23,15 @@ const transporter = nodemailer_1.default.createTransport({
     },
 });
 router.post('/sendCallBack', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
     try {
         transporter.sendMail({
-            from: `This message from ${(_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.phoneNumber}`,
+            from: `Зворотній дзвінок від ${(_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.phoneNumber}`,
             to: 'rostislavtruhim012@gmail.com',
-            subject: `Новий заказ від ${(_b = req === null || req === void 0 ? void 0 : req.body) === null || _b === void 0 ? void 0 : _b.phoneNumber}`,
-            html: `<p>Новий заказ від ${(_c = req === null || req === void 0 ? void 0 : req.body) === null || _c === void 0 ? void 0 : _c.phoneNumber}</p>`,
+            subject: `Зворотній дзвінок від ${(_b = req === null || req === void 0 ? void 0 : req.body) === null || _b === void 0 ? void 0 : _b.phoneNumber}`,
+            html: `<p>Зворотній дзвінок від <a href=tel:+${(_c = req === null || req === void 0 ? void 0 : req.body) === null || _c === void 0 ? void 0 : _c.phoneNumber}>
+      +${(_d = req === null || req === void 0 ? void 0 : req.body) === null || _d === void 0 ? void 0 : _d.phoneNumber}
+    </a></p>`,
         });
         res.status(200).send('Success has send call back');
     }
@@ -38,27 +40,29 @@ router.post('/sendCallBack', (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 }));
 router.post('/sendCartCallBack', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _d, _e, _f, _g, _h;
-    const products = (_d = req === null || req === void 0 ? void 0 : req.body) === null || _d === void 0 ? void 0 : _d.products.map((product) => {
+    var _e, _f, _g, _h, _j, _k;
+    const products = (_e = req === null || req === void 0 ? void 0 : req.body) === null || _e === void 0 ? void 0 : _e.products.map((product) => {
         var _a, _b, _c;
         return `
     <img src="${(_a = product === null || product === void 0 ? void 0 : product.product) === null || _a === void 0 ? void 0 : _a.img}" />
     <p>Назва продукту: ${(_b = product === null || product === void 0 ? void 0 : product.product) === null || _b === void 0 ? void 0 : _b.title}</p>
-    <p>Ціна: ${((_c = product === null || product === void 0 ? void 0 : product.product) === null || _c === void 0 ? void 0 : _c.price) *
+    <p>Ціна: ${Math.ceil(((_c = product === null || product === void 0 ? void 0 : product.product) === null || _c === void 0 ? void 0 : _c.price) *
             ((product === null || product === void 0 ? void 0 : product.width) / 1000) *
-            ((product === null || product === void 0 ? void 0 : product.height) / 1000)} грн</p>
+            ((product === null || product === void 0 ? void 0 : product.height) / 1000))} грн</p>
     <p>Кількість: ${product === null || product === void 0 ? void 0 : product.count}</p>
-    <p>Ширина: ${product === null || product === void 0 ? void 0 : product.width}</p>
-    <p>Висота: ${product === null || product === void 0 ? void 0 : product.height}</p>
+    <p>Ширина: ${product === null || product === void 0 ? void 0 : product.width} мм</p>
+    <p>Висота: ${product === null || product === void 0 ? void 0 : product.height} мм</p>
     `;
     }).join('');
     try {
         transporter.sendMail({
-            from: `This message from ${(_e = req === null || req === void 0 ? void 0 : req.body) === null || _e === void 0 ? void 0 : _e.phoneNumber}`,
+            from: `This message from ${(_f = req === null || req === void 0 ? void 0 : req.body) === null || _f === void 0 ? void 0 : _f.phoneNumber}`,
             to: 'rostislavtruhim012@gmail.com',
-            subject: `Новий заказ від ${(_f = req === null || req === void 0 ? void 0 : req.body) === null || _f === void 0 ? void 0 : _f.phoneNumber}`,
+            subject: `Новий заказ від ${(_g = req === null || req === void 0 ? void 0 : req.body) === null || _g === void 0 ? void 0 : _g.phoneNumber}`,
             html: `
-        <h2>Новий заказ від ${(_g = req === null || req === void 0 ? void 0 : req.body) === null || _g === void 0 ? void 0 : _g.phoneNumber} на суму ${(_h = req === null || req === void 0 ? void 0 : req.body) === null || _h === void 0 ? void 0 : _h.totalPrice} грн</h2>
+        <h2>Новий заказ від <a href=tel:+${(_h = req === null || req === void 0 ? void 0 : req.body) === null || _h === void 0 ? void 0 : _h.phoneNumber}>
+          +${(_j = req === null || req === void 0 ? void 0 : req.body) === null || _j === void 0 ? void 0 : _j.phoneNumber}
+        </a> на суму ${(_k = req === null || req === void 0 ? void 0 : req.body) === null || _k === void 0 ? void 0 : _k.totalPrice} грн</h2>
         ${products}
       `,
         });

@@ -15,10 +15,12 @@ const transporter = nodemailer.createTransport({
 router.post('/sendCallBack', async (req, res) => {
   try {
     transporter.sendMail({
-      from: `This message from ${req?.body?.phoneNumber}`,
+      from: `Зворотній дзвінок від ${req?.body?.phoneNumber}`,
       to: 'rostislavtruhim012@gmail.com',
-      subject: `Новий заказ від ${req?.body?.phoneNumber}`,
-      html: `<p>Новий заказ від ${req?.body?.phoneNumber}</p>`,
+      subject: `Зворотній дзвінок від ${req?.body?.phoneNumber}`,
+      html: `<p>Зворотній дзвінок від <a href=tel:+${req?.body?.phoneNumber}>
+      +${req?.body?.phoneNumber}
+    </a></p>`,
     });
 
     res.status(200).send('Success has send call back');
@@ -33,11 +35,11 @@ router.post('/sendCartCallBack', async (req, res) => {
       return `
     <img src="${product?.product?.img}" />
     <p>Назва продукту: ${product?.product?.title}</p>
-    <p>Ціна: ${
+    <p>Ціна: ${Math.ceil(
       product?.product?.price *
-      (product?.width / 1000) *
-      (product?.height / 1000)
-    } грн</p>
+        (product?.width / 1000) *
+        (product?.height / 1000),
+    )} грн</p>
     <p>Кількість: ${product?.count}</p>
     <p>Ширина: ${product?.width} мм</p>
     <p>Висота: ${product?.height} мм</p>
@@ -51,7 +53,9 @@ router.post('/sendCartCallBack', async (req, res) => {
       to: 'rostislavtruhim012@gmail.com',
       subject: `Новий заказ від ${req?.body?.phoneNumber}`,
       html: `
-        <h2>Новий заказ від ${req?.body?.phoneNumber} на суму ${req?.body?.totalPrice} грн</h2>
+        <h2>Новий заказ від <a href=tel:+${req?.body?.phoneNumber}>
+          +${req?.body?.phoneNumber}
+        </a> на суму ${req?.body?.totalPrice} грн</h2>
         ${products}
       `,
     });
