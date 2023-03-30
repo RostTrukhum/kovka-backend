@@ -33,10 +33,14 @@ router.post('/sendCartCallBack', async (req, res) => {
       return `
     <img src="${product?.product?.img}" />
     <p>Назва продукту: ${product?.product?.title}</p>
-    <p>Ціна: ${product?.product?.price} грн</p>
+    <p>Ціна: ${
+      product?.product?.price *
+      (product?.width / 1000) *
+      (product?.height / 1000)
+    } грн</p>
     <p>Кількість: ${product?.count}</p>
-    <p>Ширина: ${product?.width}</p>
-    <p>Висота: ${product?.height}</p>
+    <p>Ширина: ${product?.width} мм</p>
+    <p>Висота: ${product?.height} мм</p>
     `;
     })
     .join('');
