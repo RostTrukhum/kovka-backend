@@ -15,6 +15,9 @@ export interface IProduct {
     subtype: string;
     createdAt: Date;
   };
+  markUpInProcents: number;
+  class?: string;
+  openingType?: string;
   count: number;
   width: number;
   height: number;

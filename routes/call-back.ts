@@ -38,11 +38,14 @@ router.post('/sendCartCallBack', async (req, res) => {
     <p>Ціна: ${Math.ceil(
       product?.product?.price *
         (product?.width / 1000) *
-        (product?.height / 1000),
+        (product?.height / 1000) *
+        product?.markUpInProcents,
     )} грн</p>
     <p>Кількість: ${product?.count}</p>
     <p>Ширина: ${product?.width} мм</p>
     <p>Висота: ${product?.height} мм</p>
+    <p>Відкривання: ${product?.openingType}</p>
+    <p>Клас: ${product?.class}</p>
     `;
     })
     .join('');

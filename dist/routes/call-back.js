@@ -48,10 +48,13 @@ router.post('/sendCartCallBack', (req, res) => __awaiter(void 0, void 0, void 0,
     <p>Назва продукту: ${(_b = product === null || product === void 0 ? void 0 : product.product) === null || _b === void 0 ? void 0 : _b.title}</p>
     <p>Ціна: ${Math.ceil(((_c = product === null || product === void 0 ? void 0 : product.product) === null || _c === void 0 ? void 0 : _c.price) *
             ((product === null || product === void 0 ? void 0 : product.width) / 1000) *
-            ((product === null || product === void 0 ? void 0 : product.height) / 1000))} грн</p>
+            ((product === null || product === void 0 ? void 0 : product.height) / 1000) *
+            (product === null || product === void 0 ? void 0 : product.markUpInProcents))} грн</p>
     <p>Кількість: ${product === null || product === void 0 ? void 0 : product.count}</p>
     <p>Ширина: ${product === null || product === void 0 ? void 0 : product.width} мм</p>
     <p>Висота: ${product === null || product === void 0 ? void 0 : product.height} мм</p>
+    <p>Відкривання: ${product === null || product === void 0 ? void 0 : product.openingType}</p>
+    <p>Клас: ${product === null || product === void 0 ? void 0 : product.class}</p>
     `;
     }).join('');
     try {

@@ -8,9 +8,12 @@ const CartSchema = new mongoose_1.Schema({
                 type: mongoose_1.Schema.Types.ObjectId,
                 ref: 'Product',
             },
+            markUpInProcents: { type: Number },
             count: { type: Number },
             width: { type: Number },
             height: { type: Number },
+            class: { type: String },
+            openingType: { type: String },
         },
     ],
 });

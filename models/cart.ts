@@ -7,9 +7,12 @@ const CartSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Product',
       },
+      markUpInProcents: { type: Number },
       count: { type: Number },
       width: { type: Number },
       height: { type: Number },
+      class: { type: String },
+      openingType: { type: String },
     },
   ],
 });
