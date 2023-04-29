@@ -27,7 +27,7 @@ router.post('/sendCallBack', (req, res) => __awaiter(void 0, void 0, void 0, fun
     try {
         transporter.sendMail({
             from: `Зворотній дзвінок від ${(_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.phoneNumber}`,
-            to: 'rostislavtruhim012@gmail.com',
+            to: 'gospodar.kovka@gmail.com',
             subject: `Зворотній дзвінок від ${(_b = req === null || req === void 0 ? void 0 : req.body) === null || _b === void 0 ? void 0 : _b.phoneNumber}`,
             html: `<p>Зворотній дзвінок від <a href=tel:+${(_c = req === null || req === void 0 ? void 0 : req.body) === null || _c === void 0 ? void 0 : _c.phoneNumber}>
       +${(_d = req === null || req === void 0 ? void 0 : req.body) === null || _d === void 0 ? void 0 : _d.phoneNumber}
@@ -60,7 +60,7 @@ router.post('/sendCartCallBack', (req, res) => __awaiter(void 0, void 0, void 0,
     try {
         transporter.sendMail({
             from: `This message from ${(_f = req === null || req === void 0 ? void 0 : req.body) === null || _f === void 0 ? void 0 : _f.phoneNumber}`,
-            to: 'rostislavtruhim012@gmail.com',
+            to: 'gospodar.kovka@gmail.com',
             subject: `Новий заказ від ${(_g = req === null || req === void 0 ? void 0 : req.body) === null || _g === void 0 ? void 0 : _g.phoneNumber}`,
             html: `
         <h2>Новий заказ від <a href=tel:+${(_h = req === null || req === void 0 ? void 0 : req.body) === null || _h === void 0 ? void 0 : _h.phoneNumber}>

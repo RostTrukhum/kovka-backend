@@ -16,7 +16,7 @@ router.post('/sendCallBack', async (req, res) => {
   try {
     transporter.sendMail({
       from: `Зворотній дзвінок від ${req?.body?.phoneNumber}`,
-      to: 'rostislavtruhim012@gmail.com',
+      to: 'gospodar.kovka@gmail.com',
       subject: `Зворотній дзвінок від ${req?.body?.phoneNumber}`,
       html: `<p>Зворотній дзвінок від <a href=tel:+${req?.body?.phoneNumber}>
       +${req?.body?.phoneNumber}
@@ -53,7 +53,7 @@ router.post('/sendCartCallBack', async (req, res) => {
   try {
     transporter.sendMail({
       from: `This message from ${req?.body?.phoneNumber}`,
-      to: 'rostislavtruhim012@gmail.com',
+      to: 'gospodar.kovka@gmail.com',
       subject: `Новий заказ від ${req?.body?.phoneNumber}`,
       html: `
         <h2>Новий заказ від <a href=tel:+${req?.body?.phoneNumber}>
