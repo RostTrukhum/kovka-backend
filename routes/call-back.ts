@@ -37,15 +37,15 @@ router.post('/sendCartCallBack', async (req, res) => {
     <p>Назва продукту: ${product?.product?.title}</p>
     <p>Ціна: ${Math.ceil(
       product?.product?.price *
-        (product?.width / 1000) *
-        (product?.height / 1000) *
-        product?.markUpInProcents,
+        ((product?.width || 1000) / 1000) *
+        ((product?.height || 1000) / 1000) *
+        (product?.markUpInProcents || 1),
     )} грн</p>
     <p>Кількість: ${product?.count}</p>
-    <p>Ширина: ${product?.width} мм</p>
-    <p>Висота: ${product?.height} мм</p>
-    <p>Відкривання: ${product?.openingType}</p>
-    <p>Клас: ${product?.class}</p>
+    ${product?.width ? `<p>Ширина: ${product?.width} мм</p>` : ''}
+    ${product?.height ? `<p>Висота: ${product?.height} мм</p>` : ''}
+    ${product?.openingType ? `<p>Відкривання: ${product?.openingType}</p>` : ''}
+    ${product?.class ? `<p>Клас: ${product?.class}</p>` : ''}
     `;
     })
     .join('');
