@@ -55,6 +55,12 @@ router.post('/sendCartCallBack', (req, res) => __awaiter(void 0, void 0, void 0,
     ${(product === null || product === void 0 ? void 0 : product.height) ? `<p>Висота: ${product === null || product === void 0 ? void 0 : product.height} мм</p>` : ''}
     ${(product === null || product === void 0 ? void 0 : product.openingType) ? `<p>Відкривання: ${product === null || product === void 0 ? void 0 : product.openingType}</p>` : ''}
     ${(product === null || product === void 0 ? void 0 : product.class) ? `<p>Клас: ${product === null || product === void 0 ? void 0 : product.class}</p>` : ''}
+    ${(product === null || product === void 0 ? void 0 : product.indoorPad)
+            ? `<p>Внутрішня накладка: ${product === null || product === void 0 ? void 0 : product.indoorPad}</p>`
+            : ''}
+    ${(product === null || product === void 0 ? void 0 : product.outsidePad)
+            ? `<p>Зовнішня накладка: ${product === null || product === void 0 ? void 0 : product.outsidePad}</p>`
+            : ''}
     `;
     }).join('');
     try {

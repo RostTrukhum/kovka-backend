@@ -13,6 +13,8 @@ const CartSchema = new Schema({
       height: { type: Number },
       class: { type: String },
       openingType: { type: String },
+      indoorPad: { type: String },
+      outsidePad: { type: String },
     },
   ],
 });

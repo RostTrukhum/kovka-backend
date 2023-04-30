@@ -40,6 +40,8 @@ router.post('/createCart', async (req, res) => {
       height: req?.body?.productHeight,
       class: req?.body?.class,
       openingType: req?.body?.openingType,
+      indoorPad: req?.body?.indoorPad,
+      outsidePad: req?.body?.outsidePad,
     });
 
     await cart.save();
@@ -78,6 +80,8 @@ router.post('/addToCart', async (req, res) => {
           height: req?.body?.productHeight,
           class: req?.body?.class,
           openingType: req?.body?.openingType,
+          indoorPad: req?.body?.indoorPad,
+          outsidePad: req?.body?.outsidePad,
         },
       },
     });
@@ -89,7 +93,9 @@ router.post('/addToCart', async (req, res) => {
           product?.height === req?.body?.productHeight &&
           product?.width === req?.body?.productWidth &&
           product?.class === req?.body?.class &&
-          product?.openingType === req?.body?.openingType,
+          product?.openingType === req?.body?.openingType &&
+          product?.indoorPad === req?.body?.indoorPad &&
+          product?.outsidePad === req?.body?.outsidePad,
       );
 
       const updatedCart = await CartModal.findOneAndUpdate(
@@ -102,6 +108,8 @@ router.post('/addToCart', async (req, res) => {
               height: req?.body?.productHeight,
               class: req?.body?.class,
               openingType: req?.body?.openingType,
+              indoorPad: req?.body?.indoorPad,
+              outsidePad: req?.body?.outsidePad,
             },
           },
         },
@@ -142,6 +150,8 @@ router.post('/addToCart', async (req, res) => {
               height: req?.body?.productHeight,
               class: req?.body?.class,
               openingType: req?.body?.openingType,
+              indoorPad: req?.body?.indoorPad,
+              outsidePad: req?.body?.outsidePad,
               markUpInProcents: req?.body?.markUpInProcents,
             },
           ],

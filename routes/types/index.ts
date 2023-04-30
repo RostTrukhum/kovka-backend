@@ -16,6 +16,8 @@ export interface IProduct {
     createdAt: Date;
   };
   markUpInProcents: number;
+  indoorPad: string;
+  outsidePad: string;
   class?: string;
   openingType?: string;
   count: number;

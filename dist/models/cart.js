@@ -14,6 +14,8 @@ const CartSchema = new mongoose_1.Schema({
             height: { type: Number },
             class: { type: String },
             openingType: { type: String },
+            indoorPad: { type: String },
+            outsidePad: { type: String },
         },
     ],
 });

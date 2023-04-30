@@ -46,6 +46,16 @@ router.post('/sendCartCallBack', async (req, res) => {
     ${product?.height ? `<p>Висота: ${product?.height} мм</p>` : ''}
     ${product?.openingType ? `<p>Відкривання: ${product?.openingType}</p>` : ''}
     ${product?.class ? `<p>Клас: ${product?.class}</p>` : ''}
+    ${
+      product?.indoorPad
+        ? `<p>Внутрішня накладка: ${product?.indoorPad}</p>`
+        : ''
+    }
+    ${
+      product?.outsidePad
+        ? `<p>Зовнішня накладка: ${product?.outsidePad}</p>`
+        : ''
+    }
     `;
     })
     .join('');
